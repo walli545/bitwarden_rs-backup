@@ -1,6 +1,6 @@
 stages:
-  - build:docker
   - push:readme
+  - build:docker
 
 variables:
   IMAGE_NAME_DOCKERHUB: "index.docker.io/bruceforce/bw_backup"
@@ -71,5 +71,5 @@ push_readme:
     DOCKER_PASS: $DOCKERHUB_PASSWORD
     PUSHRM_TARGET: $IMAGE_NAME_DOCKERHUB
   script:
-    - $IMAGE_NAME_DOCKERHUB
+    - --debug $IMAGE_NAME_DOCKERHUB
 
