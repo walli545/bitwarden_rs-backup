@@ -58,18 +58,9 @@ build:
   script:
     - *docker_login
     #- docker build --pull -t "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/bw_backup:${CI_COMMIT_TAG:-latest}" .
+    - docker run -e DOCKER_USER=$DOCKERHUB_USER -e DOCKER_PASS=$DOCKERHUB_PASSWORD chko/docker-pushr $IMAGE_NAME_DOCKERHUB
     - docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/amd64 --tag "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME" .
     #- docker push "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/bw_backup:${CI_COMMIT_TAG:-latest}"
   except:
     - master
-
-push_readme:
-  stage: push:readme
-  image: chko/docker-pushrm
-  variables:
-    DOCKER_USER: $DOCKERHUB_USER
-    DOCKER_PASS: $DOCKERHUB_PASSWORD
-    PUSHRM_TARGET: $IMAGE_NAME_DOCKERHUB
-  script:
-    - --debug $IMAGE_NAME_DOCKERHUB
 
