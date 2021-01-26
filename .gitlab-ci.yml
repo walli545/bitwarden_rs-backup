@@ -38,7 +38,7 @@ variables:
     - docker info
 
 push_readme:
-  stage: push:image
+  stage: push:readme
   image: docker:latest
   services:
     - docker:dind
