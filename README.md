@@ -1,3 +1,16 @@
+Fork of [Bruceforce/bitwarden_rs-backup](https://github.com/Bruceforce/bitwarden_rs-backup) that enables backups of [bitwarden_rs](https://github.com/dani-garcia/bitwarden_rs) to webdav.
+
+# Additional environment variables
+
+| ENV             | Description                                                                    |
+| --------------- | ------------------------------------------------------------------------------ |
+| WEBDAV_USER     | Username to use for webdav connection                                          |
+| WEBDAV_PASSWORD | Password to use for webdav connection                                          |
+| WEBDAV_URL      | Webdav url where backups should be located                                     |
+| CA_CRT          | Use this to supply a ca certificate (.pem) when using self signed certificates |
+
+---
+
 # bitwarden_rs Backup
 Docker Containers for [bitwarden_rs](https://github.com/dani-garcia/bitwarden_rs) Backup.
 
