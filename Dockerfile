@@ -7,7 +7,9 @@ RUN apk add --no-cache \
     sqlite \
     busybox-suid \
     su-exec \
-    tzdata
+    tzdata \
+    curl \
+    ca-certificates
 
 ENV DB_FILE /data/db.sqlite3
 ENV BACKUP_FILE /data/db_backup/backup.sqlite3

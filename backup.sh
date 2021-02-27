@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [[ ! -z "${CA_CRT}" ]]
+then
+  printf '%s\n' "$CA_CRT" > ca_crt.pem
+  cat ca_crt.pem
+fi
+
 # Check if db file is accessible and exit otherwise
 if [ ! -e "$DB_FILE" ]
 then 
@@ -17,9 +23,19 @@ fi
 /usr/bin/sqlite3 $DB_FILE ".backup $FINAL_BACKUP_FILE"
 if [ $? -eq 0 ]
 then 
-  echo "$(date "+%F %T") - Backup successfull to $FINAL_BACKUP_FILE"
+  echo "$(date "+%F %T") - Backup successful"
+  echo "$FINAL_BACKUP_FILE"
+  echo "$BACKUP_FILE"
+  BF_NAME=`basename $FINAL_BACKUP_FILE`
+  echo "$BF_NAME"
+  if [[ -z "${CA_CRT}" ]]
+  then
+    curl -T ${FINAL_BACKUP_FILE} -u ${WEBDAV_USER}:${WEBDAV_PASSWORD} ${WEBDAV_URL}/${BF_NAME}
+  else 
+    curl -T ${FINAL_BACKUP_FILE} --cacert ca_crt.pem -u ${WEBDAV_USER}:${WEBDAV_PASSWORD} ${WEBDAV_URL}/${BF_NAME}
+  fi
 else
-  echo "$(date "+%F %T") - Backup unsuccessfull"
+  echo "$(date "+%F %T") - Backup unsuccessful"
 fi
 
 if [ ! -z $DELETE_AFTER ] && [ $DELETE_AFTER -gt 0 ]
